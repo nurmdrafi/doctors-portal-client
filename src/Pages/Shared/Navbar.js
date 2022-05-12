@@ -2,8 +2,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const MenuItems = (
+    <>
+      <li>
+        <Link to="/home">Home</Link>
+      </li>
+      <li>
+        <Link to="/about">About</Link>
+      </li>
+      <li>
+        <Link to="/appointment">Appointment</Link>
+      </li>
+      <li>
+        <Link to="/reviews">Reviews</Link>
+      </li>
+      <li>
+        <Link to="/contact">Contact Us</Link>
+      </li>
+      <li>
+        <Link to="/login">Login</Link>
+      </li>
+    </>
+  );
+
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 container mx-auto px-28">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex="0" className="btn btn-ghost lg:hidden">
@@ -26,49 +49,15 @@ const Navbar = () => {
             tabIndex="0"
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
-              <Link to="/home">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/appointment">Appointment</Link>
-            </li>
-            <li>
-              <Link to="/reviews">Reviews</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact Us</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
+            {MenuItems}
           </ul>
         </div>
-        <Link to="/home" className="btn btn-ghost normal-case text-xl">Doctors Portal</Link>
+        <Link to="/home" className="btn btn-ghost normal-case text-xl">
+          Doctors Portal
+        </Link>
       </div>
       <div className="navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal p-0">
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/appointment">Appointment</Link>
-          </li>
-          <li>
-            <Link to="/reviews">Reviews</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact Us</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
+        <ul className="menu menu-horizontal p-0">{MenuItems}</ul>
       </div>
     </div>
   );
