@@ -6,16 +6,16 @@ import PrimaryButton from "../Shared/PrimaryButton";
 const HomeAppoinment = () => {
   return (
     <section
-      className="card lg:card-side bg-base-100 my-36 md:px-16 lg:px-32 rounded-none overflow-visible"
+      className="card lg:card-side bg-base-100 my-36 md:px-16 lg:px-32 rounded-none overflow-visible relative"
       style={{
-        maxHeight: "533px",
+        maxHeight: "530px",
         background: `url(${appointmentBg})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center left",
       }}
     >
       <figure className=" xl:w-1/2 ">
-        <img src={doctor} alt="doctor" className="hidden xl:block z-10 -mt-20"/>
+        <img src={doctor} alt="doctor" className="hidden xl:block z-10 -mt-12 absolute bottom-0" style={{width: "550px", height: "auto"}}/>
       </figure>
       <div className="card-body w-full lg:w-1/2 flex justify-center">
         <h3 className="uppercase text-secondary font-bold text-lg">
