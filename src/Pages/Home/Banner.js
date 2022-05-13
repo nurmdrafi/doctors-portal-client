@@ -1,6 +1,7 @@
 import React from "react";
 import Chair from "../../assets/images/chair.png";
 import BannerImg from "../../assets/images/bg.png";
+import PrimaryButton from "../Shared/PrimaryButton";
 
 const Banner = () => {
   const BannerBackground = {
@@ -24,7 +25,7 @@ const Banner = () => {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-          <button className="btn btn-primary uppercase font-bold text-white bg-gradient-to-r from-[#19D3AE] to-[#0FCFEC] hover:from-[#0FCFEC] hover:to-[#19D3AE]">Get Started</button>
+        <PrimaryButton>Get Started</PrimaryButton>
         </div>
       </div>
     </div>
