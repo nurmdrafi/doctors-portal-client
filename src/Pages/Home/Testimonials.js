@@ -44,9 +44,10 @@ const Testimonials = () => {
           <img src={quote} alt="quote" className="w-24 lg:w-48" />
         </div>
       </div>
-      <div className="flex justify-between my-6">
+      <div className="flex flex-wrap gap-10 my-16">
         {reviews.map((review) => (
-          <Review key={review._id} review={review} />
+          <Review key={review._id} review={review} 
+          className=""/>
         ))}
       </div>
     </section>
