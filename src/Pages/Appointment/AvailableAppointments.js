@@ -2,12 +2,19 @@ import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import AvailableServices from "./AvailableServices";
 import Modal from "react-modal";
+import { useForm } from "react-hook-form";
 
 const AvailableAppointments = ({ date }) => {
   const [services, setServices] = useState([]);
   const [booking, setBooking] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
   useEffect(() => {
-    fetch("services.json")
+    fetch("http://localhost:5000/service")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
@@ -26,7 +33,7 @@ const AvailableAppointments = ({ date }) => {
     },
   };
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -34,17 +41,20 @@ const AvailableAppointments = ({ date }) => {
 
   function closeModal() {
     setIsOpen(false);
+    setBooking(null);
   }
-  const handleBooking = (e) =>{
-    e.preventDefault();
-    console.log(e.target.name.value)
 
-  }
+  // React Hook Form
+  const handleBooking = (data) => {
+    console.log("handleBooking", data);
+    closeModal();
+    setBooking(null);
+  };
 
   return (
     <section className="px-8 my-16">
       <p className="text-secondary text-xl text-center font-bold my-16">
-        Available Appointments on {format(date, "PP")}{" "}
+        Available Appointments on {format(date, "PP")}
       </p>
       <div className="flex flex-wrap gap-6">
         {services.map((service) => (
@@ -72,46 +82,69 @@ const AvailableAppointments = ({ date }) => {
             X
           </button>
         </div>
-        <form className="flex flex-col gap-6" onSubmit={handleBooking}>
+
+        {/* Booking Form */}
+
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={handleSubmit(handleBooking)}
+        >
           <input
             name="date"
+            {...register("date", { required: true })}
             type="text"
-            className="input min-w-[350px] "
+            className="input min-w-[350px]"
             value={format(date, "PP")}
-            disabled
           />
           <select
             name="slot"
-            className="select select-bordered w-full max-w-xs"
+            {...register("slot", { required: true })}
+            className={`select select-borderedmin-w-[350px] ${
+              errors.slot && "border-red-500"
+            }`}
           >
             {booking?.slots.map((slot, idx) => (
-              <option key={idx} value={slot}>
+              <option key={idx} defaultValue={slot}>
                 {slot}
               </option>
             ))}
           </select>
+          {errors.slot && <p className="text-red-500">Slot is required</p>}
           <input
             name="name"
+            {...register("name", { required: true })}
             type="text"
-            className="input min-w-[350px]"
+            className={`input min-w-[350px] ${errors.name && "border-red-500"}`}
             placeholder="Full Name"
-            required
           />
+          {errors.name && (
+            <p className="text-red-500 flex-grow-0">Name is required</p>
+          )}
           <input
             name="number"
+            {...register("number", { required: true })}
             type="number"
-            className="input min-w-[350px]"
+            className={`input min-w-[350px] ${
+              errors.number && "border-red-500"
+            }`}
             placeholder="Phone Number"
-            required
           />
+          {errors.number && (
+            <p className="text-red-500 flex-grow-0">Number is required</p>
+          )}
           <input
             name="email"
+            {...register("email", { required: true })}
             type="email"
-            className="input min-w-[350px]"
+            className={`input min-w-[350px] ${
+              errors.email && "border-red-500"
+            }`}
             placeholder="Email"
-            required
           />
-          <input type="submit" value="SUBMIT" className="btn" />
+          {errors.email && (
+            <p className="text-red-500 flex-grow-0">Email is required</p>
+          )}
+          <input type="submit" defaultValue="SUBMIT" className="btn" />
         </form>
       </Modal>
     </section>
