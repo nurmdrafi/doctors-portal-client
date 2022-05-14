@@ -10,7 +10,6 @@ const AvailableAppointments = ({ date }) => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm();
   useEffect(() => {
@@ -44,9 +43,8 @@ const AvailableAppointments = ({ date }) => {
     setBooking(null);
   }
 
-  // React Hook Form
+  // handleBooking Form
   const handleBooking = (data) => {
-    console.log("handleBooking", data);
     closeModal();
     setBooking(null);
   };
