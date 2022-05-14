@@ -2,7 +2,7 @@ import React from "react";
 
 const Review = ({ review }) => {
   return (
-    <div className="card w-96 bg-base-100 shadow-xl mx-auto">
+    <div className="card w-[385px] bg-base-100 shadow-xl mx-auto">
       <div className="card-body">
         <p>{review.review}</p>
         <div className="card-actions justify-start items-center gap-6 mt-4">

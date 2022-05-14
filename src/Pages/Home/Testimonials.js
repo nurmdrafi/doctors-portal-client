@@ -32,7 +32,8 @@ const Testimonials = () => {
     },
   ];
   return (
-    <section className="container mx-auto px-28">
+    <section className="container mx-auto px-8 md:px-16 lg:px-28">
+      {/*  px-8  md:px-24 lg:px-28*/}
       <div className="flex justify-between items-center">
         <div>
           <h4 className="uppercase text-secondary font-bold text-lg my-2">
@@ -44,7 +45,7 @@ const Testimonials = () => {
           <img src={quote} alt="quote" className="w-24 lg:w-48" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-10 my-16">
+      <div className="flex flex-wrap gap-6 my-16">
         {reviews.map((review) => (
           <Review key={review._id} review={review} 
           className=""/>

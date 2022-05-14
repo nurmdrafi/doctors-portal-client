@@ -25,7 +25,7 @@ const Services = () => {
         Our Services
       </h2>
       <h3 className="text-center text-3xl mb-16">Services We Provide</h3>
-      <div className="grid grid-rows-1 md:grid-cols-3 lg:grid-cols-3 gap-10 px-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10 px-5">
         <ServiceCard service={service1} />
         <ServiceCard service={service2} />
         <ServiceCard service={service3} />

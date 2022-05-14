@@ -11,7 +11,7 @@ const Banner = () => {
     backgroundPosition: "center left",
   };
   return (
-    <section className="hero min-h-screen" style={BannerBackground}>
+    <section className="hero min-h-screen max-w-full" style={BannerBackground}>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <img
           src={Chair}
@@ -25,7 +25,7 @@ const Banner = () => {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-        <PrimaryButton>Get Started</PrimaryButton>
+          <PrimaryButton>Get Started</PrimaryButton>
         </div>
       </div>
     </section>

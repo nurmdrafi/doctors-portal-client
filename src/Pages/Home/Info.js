@@ -32,7 +32,7 @@ const Info = () => {
   ];
 
   return (
-    <section className="grid grid-rows-1 md:grid-cols-3 lg:grid-cols-3 gap-4 px-5">
+    <section className="grid md:grid-cols-3 lg:grid-cols-3 gap-4 px-5">
       {infos.map((info) => (
         <InfoCard key={info._id} info={info} />
       ))}

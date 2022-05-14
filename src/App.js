@@ -3,7 +3,7 @@ import Navbar from "./Pages/Shared/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
-import Appointment from "./Pages/Appointment/Appointment";
+import Appointment from "./Pages/Appointment/AppointmentBanner";
 import Reviews from "./Pages/Reviews/Reviews";
 import Contact from "./Pages/Contact/Contact";
 import Login from "./Pages/Login/Login";
