@@ -1,7 +1,7 @@
 import React from "react";
 import PrimaryButton from "../Shared/PrimaryButton";
 
-const AvailableServices = ({ service }) => {
+const AvailableServices = ({ service, setBooking, openModal }) => {
   return (
     <div className="card w-[425px] bg-base-100 drop-shadow-lg mx-auto">
       <div className="card-body items-center text-center">
@@ -21,7 +21,13 @@ const AvailableServices = ({ service }) => {
         )}
 
         <div className="card-actions">
-          <PrimaryButton disabled={service.slots.length === 0}>
+          <PrimaryButton
+            disabled={service.slots.length === 0}
+            onClick={() => {
+              setBooking(service);
+              openModal(openModal);
+            }}
+          >
             Book Appointment
           </PrimaryButton>
         </div>
