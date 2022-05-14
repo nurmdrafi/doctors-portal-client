@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import chair from "../../assets/images/chair.png";
 import assignmentBannerBg from "../../assets/images/bg.png";
 import { DayPicker } from "react-day-picker";
@@ -9,11 +8,11 @@ const BannerBackground = {
   minHeight: "90vh",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center left",
+  boxShadow: "25px 25px 50px 0 #F6F7F9 inset, -25px -25px 50px 0 #F6F7F9 inset"
 };
 const css = `
 .my-selected { 
     font-weight: bold; 
-    border: 2px solid #0FCFEC;
     color: #0FCFEC;
   }
   .my-selected:hover:not([disabled]) { 
@@ -27,11 +26,9 @@ const css = `
 }
 `;
 
-const AppointmentBanner = () => {
-  const [date, setDate] = useState(new Date());
-
+const AppointmentBanner = ({date, setDate}) => {
   return (
-    <div className="hero min-h-screen bg-base-100" style={BannerBackground}>
+    <section className="hero min-h-screen bg-base-100" style={BannerBackground}>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <img
           src={chair}
@@ -51,7 +48,7 @@ const AppointmentBanner = () => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

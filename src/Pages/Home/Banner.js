@@ -9,6 +9,7 @@ const Banner = () => {
     minHeight: "90vh",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center left",
+    boxShadow: "25px 25px 50px 0 #F6F7F9 inset, -25px -25px 50px 0 #F6F7F9 inset"
   };
   return (
     <section className="hero min-h-screen max-w-full" style={BannerBackground}>
