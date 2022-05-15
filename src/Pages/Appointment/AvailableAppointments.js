@@ -3,8 +3,11 @@ import { format } from "date-fns";
 import AvailableServices from "./AvailableServices";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const AvailableAppointments = ({ date }) => {
+  const [user, loading] = useAuthState(auth);
   const [services, setServices] = useState([]);
   const [booking, setBooking] = useState(null);
   const {
@@ -19,7 +22,6 @@ const AvailableAppointments = ({ date }) => {
   }, []);
 
   // Booking Modal
-
   const customStyles = {
     content: {
       top: "50%",
@@ -33,7 +35,6 @@ const AvailableAppointments = ({ date }) => {
   };
 
   const [modalIsOpen, setIsOpen] = useState(false);
-
   function openModal() {
     setIsOpen(true);
   }
@@ -45,10 +46,18 @@ const AvailableAppointments = ({ date }) => {
 
   // handleBooking Form
   const handleBooking = (data) => {
+    console.log(data);
     closeModal();
     setBooking(null);
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-3xl font-bold">Loading...</p>
+      </div>
+    );
+  }
   return (
     <section className="px-8 my-16">
       <p className="text-secondary text-xl text-center font-bold my-16">
@@ -87,9 +96,9 @@ const AvailableAppointments = ({ date }) => {
           className="flex flex-col gap-3"
           onSubmit={handleSubmit(handleBooking)}
         >
+          {/* Date */}
           <input
-            name="date"
-            {...register("date", { required: true })}
+            {...register("date")}
             type="text"
             className="input min-w-[350px]"
             value={format(date, "PP")}
@@ -108,18 +117,18 @@ const AvailableAppointments = ({ date }) => {
             ))}
           </select>
           {errors.slot && <p className="text-red-500">Slot is required</p>}
+
+          {/* Name */}
           <input
-            name="name"
-            {...register("name", { required: true })}
+            {...register("name")}
             type="text"
-            className={`input min-w-[350px] ${errors.name && "border-red-500"}`}
+            className="input min-w-[350px]"
             placeholder="Full Name"
+            value={user?.name || ""}
           />
-          {errors.name && (
-            <p className="text-red-500 flex-grow-0">Name is required</p>
-          )}
+
+          {/* Number */}
           <input
-            name="number"
             {...register("number", { required: true })}
             type="number"
             className={`input min-w-[350px] ${
@@ -130,18 +139,15 @@ const AvailableAppointments = ({ date }) => {
           {errors.number && (
             <p className="text-red-500 flex-grow-0">Number is required</p>
           )}
+
+          {/* Email */}
           <input
-            name="email"
-            {...register("email", { required: true })}
+            {...register("email")}
             type="email"
-            className={`input min-w-[350px] ${
-              errors.email && "border-red-500"
-            }`}
+            className="input min-w-[350px]"
             placeholder="Email"
+            value={user?.email || ""}
           />
-          {errors.email && (
-            <p className="text-red-500 flex-grow-0">Email is required</p>
-          )}
           <input type="submit" defaultValue="SUBMIT" className="btn" />
         </form>
       </Modal>
