@@ -1,7 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -11,9 +15,14 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm();
+
+  // Create User With Email And Password
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
+
+  // Sign In With Google
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
 
   // React Hook Form
   const onSubmit = (data) => {
@@ -44,23 +53,6 @@ const Login = () => {
         message: "Password did not match.",
       });
     }
-    // Create user with email and password
-    /*
-    createUserWithEmailAndPassword(data.email, data.password).then(() => {
-       // JWT
-          axios
-            .post("https://ebike-warehouse.herokuapp.com/login", {
-              email: data.email,
-            })
-            .then(({ data }) => {
-              localStorage.setItem("accessToken", data.accessToken);
-              setToken(data.accessToken);
-            }); 
-
-      // reset input field
-      reset();
-    });
-    */
   };
   return (
     <div className="flex justify-center items-center h-screen">
@@ -71,37 +63,36 @@ const Login = () => {
             onSubmit={handleSubmit(onSubmit)}
             className=" flex flex-col gap-3"
           >
-            {/* Email */}
-            <div className="flex flex-col">
-              <label className="text-left">Email</label>
+            {/* Email Input */}
+            <div className="form-control min-w-[350px]">
+              <label className="text-left pb-1">Email</label>
               <input
                 type="text"
                 {...register("email", { required: true })}
                 placeholder="work@example.com"
-                className={`input border-2 border-slate-300 min-w-[350px] ${
+                className={`input border-2 border-slate-300 w-full ${
                   errors.email && "border-red-500"
                 }`}
               />
-              {/* border-slate-400 */}
-              {/* Error Message */}
+              {/* Email Error Message */}
               {errors.email?.type === "required" && (
                 <p className="text-danger">Email is required</p>
               )}
             </div>
 
-            {/* Password */}
-            <div className="flex flex-col">
-              <label className="text-left">Password</label>
+            {/* Password Input */}
+            <div className="form-control min-w-[350px]">
+              <label className="text-left pb-1">Password</label>
               <input
                 type="password"
                 {...register("password", { required: true })}
                 placeholder="Enter your password"
-                className={`input border-2 border-slate-300 min-w-[350px] ${
+                className={`input border-2 border-slate-300 w-full ${
                   errors.password && "border-red-500"
                 }`}
               />
 
-              {/* Error Message */}
+              {/* Password Error Message */}
               {errors.password?.type === "required" && (
                 <p className="text-danger">Password is required</p>
               )}
@@ -109,12 +100,31 @@ const Login = () => {
                 <p className="text-danger">errors.password.message</p>
               )}
             </div>
-          <button className="btn btn-active btn-accent uppercase min-w-[350px]">Login</button>
+
+            {/* Login Button */}
+            <button
+              type="submit"
+              className="btn btn-active btn-accent uppercase min-w-[350px]"
+            >
+              Login
+            </button>
           </form>
+          <p>
+            New to Doctors Portal?{" "}
+            <Link to="/register" className="text-secondary">
+              Create new account
+            </Link>
+          </p>
+          {/* Divider */}
           <div className="flex flex-col w-full border-opacity-50">
             <div className="divider">OR</div>
           </div>
-          <button className="btn btn-outline uppercase min-w-[350px]" onClick={() => signInWithGoogle()}>Continue with google</button>
+          <button
+            className="btn btn-outline uppercase min-w-[350px]"
+            onClick={() => signInWithGoogle()}
+          >
+            Continue with google
+          </button>
         </div>
       </div>
     </div>
