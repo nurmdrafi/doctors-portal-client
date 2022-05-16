@@ -15,7 +15,10 @@ const AvailableAppointments = ({ date }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+  console.log("errors", errors);
+  // GET Services
   useEffect(() => {
     fetch("http://localhost:5000/service")
       .then((res) => res.json())
@@ -45,17 +48,36 @@ const AvailableAppointments = ({ date }) => {
     setBooking(null);
   }
 
-  // handleBooking Form
-  const handleBooking = (data) => {
-    console.log(data);
+  // handleAppointment Form
+  const handleAppointment = async (data) => {
+    const appointment = {
+      treatmentId: data._id,
+      treatment: data.name,
+      date: data.date,
+      slot: data.slot,
+      patientName: data.name,
+      patientEmail: data.email,
+      patientPhone: data.number,
+    };
+    await fetch("http://localhost:5000/appointment", {
+      method: "POST",
+      body: JSON.stringify(appointment),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        // Show Notification
+      });
+
+    reset();
     closeModal();
-    setBooking(null);
   };
 
   if (loading) {
-    return (
-      <Loading/>
-    );
+    return <Loading />;
   }
   return (
     <section className="px-8 my-16">
@@ -93,14 +115,15 @@ const AvailableAppointments = ({ date }) => {
 
         <form
           className="flex flex-col gap-3"
-          onSubmit={handleSubmit(handleBooking)}
+          onSubmit={handleSubmit(handleAppointment)}
         >
-          {/* Date */}
+          {/* Date Input */}
           <input
             {...register("date")}
             type="text"
             className="input min-w-[350px]"
             value={format(date, "PP")}
+            readOnly
           />
           <select
             name="slot"
@@ -117,16 +140,27 @@ const AvailableAppointments = ({ date }) => {
           </select>
           {errors.slot && <p className="text-red-500">Slot is required</p>}
 
-          {/* Name */}
+          {/* Name Input*/}
           <input
             {...register("name")}
             type="text"
             className="input min-w-[350px]"
             placeholder="Full Name"
-            value={user?.displayName || ""}
+            value={user?.displayName}
+            readOnly
           />
 
-          {/* Number */}
+          {/* Email Input */}
+          <input
+            {...register("email")}
+            type="email"
+            className="input min-w-[350px]"
+            placeholder="Email"
+            value={user?.email}
+            readOnly
+          />
+
+          {/* Number Input */}
           <input
             {...register("number", { required: true })}
             type="number"
@@ -138,15 +172,7 @@ const AvailableAppointments = ({ date }) => {
           {errors.number && (
             <p className="text-red-500 flex-grow-0">Number is required</p>
           )}
-
-          {/* Email */}
-          <input
-            {...register("email")}
-            type="email"
-            className="input min-w-[350px]"
-            placeholder="Email"
-            value={user?.email || ""}
-          />
+          {/* Submit Button */}
           <input type="submit" defaultValue="SUBMIT" className="btn" />
         </form>
       </Modal>
