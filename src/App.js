@@ -9,6 +9,7 @@ import Contact from "./Pages/Contact/Contact";
 import Login from "./Pages/Auth/Login";
 import NotFound from "./Pages/NotFound/NotFound";
 import Registration from "./Pages/Auth/Registration";
+import RequireAuth from "./Pages/Auth/RequireAuth";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/appointment" element={<Appointment />} />
+        <Route path="/appointment" element={<RequireAuth><Appointment /></RequireAuth>} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />

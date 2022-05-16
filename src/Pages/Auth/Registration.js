@@ -1,8 +1,13 @@
-import React from "react";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import React, { useEffect } from "react";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
+import Loading from "../Shared/Loading";
 
 const Registration = () => {
   const {
@@ -13,10 +18,22 @@ const Registration = () => {
     reset,
   } = useForm();
 
+  // Navigate
+  const navigate = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  // Create User With Email and Password
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
   // Sign In With Google
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
-  const handleRegistration = (data) => {
+
+  const handleRegistration = async (data) => {
     // Check White Space
     if (!/^\S*$/.test(data.password)) {
       setError("password", {
@@ -66,10 +83,35 @@ const Registration = () => {
         message: "Please confirm your password",
       });
     } else {
-      console.log(data);
+      await createUserWithEmailAndPassword(data.email, data.password);
+      await updateProfile({ displayName: data.name });
+      await console.log(data);
       reset();
     }
   };
+
+  // Navigate
+  useEffect(() => {
+    if (user || googleUser) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate, user, googleUser]);
+
+  // Loading
+  if (loading || googleLoading || updating) {
+    return <Loading />;
+  }
+
+  // Error
+  if (error) {
+    console.log(error.message);
+  }
+  if (googleError) {
+    console.log(googleError.message);
+  }
+  if (updateError) {
+    console.log(updateError.message);
+  }
 
   return (
     <div className="flex justify-center items-center h-screen">

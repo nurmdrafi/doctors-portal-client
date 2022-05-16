@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Loading from "../Shared/Loading";
 
 const Login = () => {
   const {
@@ -15,6 +16,11 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm();
+
+  // Navigate
+  const navigate = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
   // Create User With Email And Password
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -54,6 +60,25 @@ const Login = () => {
       });
     }
   };
+
+  // Navigate
+  useEffect(() => {
+    if (user || googleUser) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate, user, googleUser]);
+
+  // Loading
+  if (loading || googleLoading) {
+    return <Loading />;
+  }
+  // Error
+  if (error) {
+    console.log(error.message);
+  }
+  if (googleError) {
+    console.log(googleError.message);
+  }
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="card w-96 bg-base-100 drop-shadow-lg">

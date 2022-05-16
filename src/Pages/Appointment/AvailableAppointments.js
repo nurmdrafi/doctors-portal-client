@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import Loading from "../Shared/Loading";
 
 const AvailableAppointments = ({ date }) => {
   const [user, loading] = useAuthState(auth);
@@ -53,9 +54,7 @@ const AvailableAppointments = ({ date }) => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-3xl font-bold">Loading...</p>
-      </div>
+      <Loading/>
     );
   }
   return (
@@ -124,7 +123,7 @@ const AvailableAppointments = ({ date }) => {
             type="text"
             className="input min-w-[350px]"
             placeholder="Full Name"
-            value={user?.name || ""}
+            value={user?.displayName || ""}
           />
 
           {/* Number */}
