@@ -45,6 +45,7 @@ const AppointmentBanner = ({date, setDate}) => {
               selected: "my-selected",
               today: "my-today",
             }}
+            required
           />
         </div>
       </div>

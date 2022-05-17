@@ -17,7 +17,6 @@ const AvailableAppointments = ({ date }) => {
     formState: { errors },
     reset,
   } = useForm();
-  console.log("errors", errors);
   // GET Services
   useEffect(() => {
     fetch("http://localhost:5000/service")
@@ -68,8 +67,17 @@ const AvailableAppointments = ({ date }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         // Show Notification
+        if (data.success) {
+          console.log(
+            `Appointment is set on ${appointment.date} at ${appointment.slot}`
+          );
+        } else {
+          console.log(
+            `Already you have an appointment on ${data.appointment.date} at ${data.appointment.slot}`
+          );
+        }
+        setBooking(null)
       });
 
     reset();
