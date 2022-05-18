@@ -8,7 +8,7 @@ const BannerBackground = {
   minHeight: "90vh",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center left",
-  boxShadow: "25px 25px 50px 0 #F6F7F9 inset, -25px -25px 50px 0 #F6F7F9 inset"
+  boxShadow: "25px 25px 50px 0 #F6F7F9 inset, -25px -25px 50px 0 #F6F7F9 inset",
 };
 const css = `
 .my-selected { 
@@ -26,7 +26,7 @@ const css = `
 }
 `;
 
-const AppointmentBanner = ({date, setDate}) => {
+const AppointmentBanner = ({ date, setDate }) => {
   return (
     <section className="hero min-h-screen bg-base-100" style={BannerBackground}>
       <div className="hero-content flex-col lg:flex-row-reverse">

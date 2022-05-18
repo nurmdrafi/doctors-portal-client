@@ -11,18 +11,23 @@ const AvailableAppointments = ({ date }) => {
   const [user, loading] = useAuthState(auth);
   const [services, setServices] = useState([]);
   const [booking, setBooking] = useState(null);
+  const [isReload, setIsReload] = useState(false);
+
+  console.log(format(date, "PP"));
+  console.log(booking);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
-  // GET Services
+
+  // GET available Services
   useEffect(() => {
-    fetch("http://localhost:5000/service")
+    fetch(`http://localhost:5000/available?date=${format(date, "PP")}`)
       .then((res) => res.json())
       .then((data) => setServices(data));
-  }, []);
+  }, [date, isReload]);
 
   // Booking Modal
   const customStyles = {
@@ -51,8 +56,8 @@ const AvailableAppointments = ({ date }) => {
   const handleAppointment = async (data) => {
     const appointment = {
       treatmentId: data._id,
-      treatment: data.name,
-      date: data.date,
+      treatment: booking.name,
+      date: format(date, "PP"),
       slot: data.slot,
       patientName: data.name,
       patientEmail: data.email,
@@ -77,7 +82,8 @@ const AvailableAppointments = ({ date }) => {
             `Already you have an appointment on ${data.appointment.date} at ${data.appointment.slot}`
           );
         }
-        setBooking(null)
+        setBooking(null);
+        setIsReload(!isReload);
       });
 
     reset();
@@ -127,10 +133,9 @@ const AvailableAppointments = ({ date }) => {
         >
           {/* Date Input */}
           <input
-            {...register("date")}
             type="text"
             className="input min-w-[350px]"
-            value={format(date, "PP")}
+            defaultValue={format(date, "PP")}
             readOnly
           />
           <select
