@@ -11,7 +11,7 @@ const BannerBackground = {
   boxShadow: "25px 25px 50px 0 #F6F7F9 inset, -25px -25px 50px 0 #F6F7F9 inset",
 };
 const css = `
-.my-selected { 
+.my-selected:active { 
     font-weight: bold; 
     color: #0FCFEC;
   }

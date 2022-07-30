@@ -24,7 +24,7 @@ const AvailableAppointments = ({ date }) => {
 
   // GET available Services
   useEffect(() => {
-    fetch(`http://localhost:5000/available?date=${format(date, "PP")}`)
+    fetch(`https://doctors-portal-30072022.herokuapp.com/available?date=${format(date, "PP")}`)
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, [date, isReload]);
@@ -63,7 +63,7 @@ const AvailableAppointments = ({ date }) => {
       patientEmail: data.email,
       patientPhone: data.number,
     };
-    await fetch("http://localhost:5000/appointment", {
+    await fetch("https://doctors-portal-30072022.herokuapp.com/appointment", {
       method: "POST",
       body: JSON.stringify(appointment),
       headers: {
